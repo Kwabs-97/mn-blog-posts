@@ -10,7 +10,7 @@ export default function Home() {
   const [page, setPage] = useState("");
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
-  const limit = 10;
+  const limit = 20;
 
   const { isLoading, isError, error, data } = usePosts();
   if (isLoading) {
