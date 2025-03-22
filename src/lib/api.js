@@ -8,21 +8,43 @@ export const api = {
       ...(search && { search }),
     });
 
-    console.log(query.toString());
+    console.log("Fetching posts with query:", query.toString());
     try {
+      // First get total count
+      const totalResponse = await fetch(`${BASE_URL}/posts`);
+      const allPosts = await totalResponse.json();
+      const total = Array.isArray(allPosts) ? allPosts.length : 0;
+
+      // Then get paginated posts
       const response = await fetch(`${BASE_URL}/posts?${query.toString()}`);
+      console.log("Response status:", response.status);
       const data = await response.json();
+      console.log("API Response:", data);
 
-      // Get total count from the response headers or use the length of the response
-      const total = data.length || 0;
+      // If the API returns an array, slice it for pagination
+      if (Array.isArray(data)) {
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+        const paginatedPosts = data.slice(startIndex, endIndex);
 
+        return {
+          posts: paginatedPosts,
+          total: total,
+        };
+      }
+
+      // If the API returns an object with posts and total
       return {
-        posts: data,
-        total,
+        posts: data.posts || [],
+        total: total,
       };
     } catch (error) {
-      console.log(error);
-      return `Error fetching posts: ${error}`;
+      console.error("API Error:", error);
+      return {
+        posts: [],
+        total: 0,
+        error: `Error fetching posts: ${error}`,
+      };
     }
   },
 
