@@ -63,7 +63,7 @@ export const api = {
             return `Error creating post: ${error}` 
         }
     },
-    async updatePosts(id, postData){
+    async updatePost(id, postData){
         try {       
             const response = await fetch(`${BASE_URL}/posts/${id}`,{
                 method:"GET",
