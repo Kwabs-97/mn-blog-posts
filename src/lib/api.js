@@ -8,18 +8,24 @@ export const api = {
             ...(search && { search }),
             ...(category && { category }),
         });
+        try {      
+            const allPostsResponse = await fetch(`${BASE_URL}/posts`);
+            const allPosts = await allPostsResponse.json();
+            
+            const response = await fetch(`${BASE_URL}/posts?${query.toString()}`);
+            const posts = await response.json();
+    
+            return { 
+                posts, 
+                total: allPosts.length || 10
+            };
+        } catch (error) {
+            
+        }
+    },
 
-        const allPostsResponse = await fetch(`${BASE_URL}/posts`);
-        const allPosts = await allPostsResponse.json();
-        
-        const response = await fetch(`${BASE_URL}/posts?${query.toString()}`);
-        const posts = await response.json();
-
-        return { 
-            posts, 
-            total: allPosts.length || 10
-        };
+    async getPost(id){
+        const response = await fetch(`${BASE_URL}/posts/${id}`);
     }
 }
 
-api.getPosts();
