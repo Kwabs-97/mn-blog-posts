@@ -20,12 +20,23 @@ export const api = {
                 total: allPosts.length || 10
             };
         } catch (error) {
-            
+         console.log(error)   
+         return `Error fetching posts: ${error}`
         }
     },
 
     async getPost(id){
-        const response = await fetch(`${BASE_URL}/posts/${id}`);
+        try {
+            const response = await fetch(`${BASE_URL}/posts/${id}`);
+            if (!response.ok) {
+                throw new Error('Post not found');
+            }
+            const post = await response.json();
+            return post;
+        } catch (error) {
+            console.log(error)   
+            return `Error fetching posts: ${error}` 
+        }
     }
 }
 
