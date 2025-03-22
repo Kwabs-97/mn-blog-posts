@@ -5,7 +5,7 @@ export default function EditorTinyMce({ value, onChange }) {
   return (
     <Editor
       apiKey="bebrwk4dapflnop04h3a1mmvodaghs2g5ddvgt6ct7ox85c6"
-      value={value}
+      value={value || ""}
       onEditorChange={(content) => onChange(content)}
       init={{
         plugins: [

@@ -60,7 +60,7 @@ function PostForm({ initialData, onSubmit, isSubmitting, isSuccess }) {
           Content
         </label>
         <EditorTinyMce
-          value={register("content").value}
+          value={register("content").value || initialData?.content || ""}
           onChange={(content) => {
             register("content").onChange({
               target: {
