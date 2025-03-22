@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postFormSchema } from "@/lib/validations";
+import EditorTinyMce from "./Editor";
 
 const CATEGORIES = [
   "Web Development",
@@ -58,11 +59,16 @@ function PostForm({ initialData, onSubmit, isSubmitting }) {
         >
           Content
         </label>
-        <textarea
-          id="content"
-          rows={10}
-          {...register("content")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
+        <EditorTinyMce
+          value={register("content").value}
+          onChange={(content) => {
+            register("content").onChange({
+              target: {
+                value: content,
+                name: "content",
+              },
+            });
+          }}
         />
         {errors.content && (
           <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
