@@ -5,6 +5,7 @@ import Search from "@/components/ui/search";
 import { useState } from "react";
 import Link from "next/link";
 import LoadingSpinner from "@/components/ui/Loading-Spinner";
+import { Pagination } from "@/components/Pagination";
 
 export default function Home() {
   const [page, setPage] = useState("");
@@ -53,6 +54,7 @@ export default function Home() {
           />
         ))}
       </div>
+      <Pagination />
     </div>
   );
 }
