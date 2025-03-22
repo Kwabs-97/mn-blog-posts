@@ -8,14 +8,10 @@ export const postFormSchema = z.object({
   content: z
     .string()
     .min(50, "Content must be at least 50 characters")
-    .max(5000, "Content must not exceed 5000 characters")
-    .transform((text) => text.replace(/\n/g, "<br>")), // Convert newlines to <br> tags
+    .max(5000, "Content must not exceed 5000 characters"), // Convert newlines to <br> tags
   author: z
     .string()
     .min(2, "Author name must be at least 2 characters")
     .max(50, "Author name must not exceed 50 characters"),
-  categories: z
-    .array(z.string())
-    .min(1, "Select at least one category")
-    .max(3, "Cannot select more than 3 categories"),
+  categories: z.array(z.string()).min(1, "Select at least one category"),
 });
