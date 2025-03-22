@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import TanstackQueryProvider from "../../providers/TanstackQueryProvider";
 import StoreProvider from "../../providers/StoreProvider";
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
         <TanstackQueryProvider>
           <StoreProvider>
             {children}
+            <Toaster />
           </StoreProvider>
         </TanstackQueryProvider>
       </body>
