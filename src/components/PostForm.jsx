@@ -18,7 +18,7 @@ const CATEGORIES = [
   "AI/ML",
 ];
 
-function PostForm({ initialData, onSubmit, isSubmitting }) {
+function PostForm({ initialData, onSubmit, isSubmitting, isSuccess }) {
   const {
     register,
     handleSubmit,
