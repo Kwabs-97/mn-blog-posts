@@ -8,6 +8,8 @@ export const api = {
             ...(search && { search }),
             ...(category && { category }),
         });
+
+        console.log(query.toString())
         try {      
             const allPostsResponse = await fetch(`${BASE_URL}/posts`);
             const allPosts = await allPostsResponse.json();
@@ -36,6 +38,54 @@ export const api = {
         } catch (error) {
             console.log(error)   
             return `Error fetching posts: ${error}` 
+        }
+    },
+
+    async createPost(post){
+
+        const posts = {
+            ...post,
+            id: Date.now(),
+            createdAt: new Date().toISOString(),
+        }
+        try {
+            const response = await fetch(`${BASE_URL}/posts`,{
+                method: "POST",
+                headers:{
+                    'Content-Type': 'Application/json'
+                },
+                body: JSON.stringify(posts)
+
+            })
+            return response;
+        } catch (error) {
+            console.log(error)   
+            return `Error creating post: ${error}` 
+        }
+    },
+    async updatePosts(id, postData){
+        try {       
+            const response = await fetch(`${BASE_URL}/posts/${id}`,{
+                method:"GET",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            })
+            return response;
+        } catch (error) {
+            console.log(error)   
+            return `Error updating post: ${error}` 
+        }
+    },
+    async deletePost(id){
+        try {
+            const response = await fetch(`${BASE_URL}/posts/${id}`,{
+                method:"DELETE"
+            })
+        } catch (error) {
+            console.log(error)   
+            return `Error deleting post` 
         }
     }
 }
