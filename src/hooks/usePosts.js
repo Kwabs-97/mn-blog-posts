@@ -1,7 +1,7 @@
-import { useQuery, useMutation, useQueryClient, useQueryClient, QueryClient } from "@tanstack/react-query";
-import { useAppDispatch} from "@/app/hooks/useAppDispatch";
+import { useQuery, useMutation, useQueryClient, QueryClient } from "@tanstack/react-query";
+import { useAppDispatch } from "./useAppDispatch";
 import { api } from "@/lib/api";
-import { addPost, updatePost as updatePostAction, deletePost as deletePostAction } from "../../../store/postSlice";
+import { addPost, updatePost as updatePostAction, deletePost as deletePostAction } from "../../store/postSlice";
 
 
 
