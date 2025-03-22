@@ -24,10 +24,10 @@ function PostForm({ initialData, onSubmit, isSubmitting }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      title: initialData.title || "",
-      content: initialData?.content || "",
-      author: initialData?.author || "",
-      categories: initialData?.categories || [],
+      title: initialData ? initialData.title : "",
+      content: initialData ? initialData.content : "",
+      author: initialData ? initialData.author : "",
+      categories: initialData ? initialData.categories : [],
     },
     resolver: zodResolver(postFormSchema),
   });

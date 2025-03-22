@@ -36,6 +36,10 @@ export function useCreatePost() {
       dispatch(addPost(newPost));
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
+    onError: (error) => {
+      console.error("Error creating post:", error);
+      throw error;
+    },
   });
 }
 
@@ -49,6 +53,10 @@ export function useUpdatePost() {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       queryClient.invalidateQueries({ queryKey: ["post", updatedPost.id] });
     },
+    onError: (error) => {
+      console.error("Error updating post:", error);
+      throw error;
+    },
   });
 }
 
@@ -58,8 +66,12 @@ export function useDeletePost() {
   return useMutation({
     mutationFn: (id) => api.deletePost(id),
     onSuccess: (_, id) => {
-      dispatch(deletePostAction(id)),
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      dispatch(deletePostAction(id));
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (error) => {
+      console.error("Error deleting post:", error);
+      throw error;
     },
   });
 }

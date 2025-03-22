@@ -58,7 +58,7 @@ export const api = {
       return post;
     } catch (error) {
       console.log(error);
-      return `Error fetching posts: ${error}`;
+      throw error;
     }
   },
 
@@ -76,25 +76,37 @@ export const api = {
         },
         body: JSON.stringify(posts),
       });
-      return response;
+
+      if (!response.ok) {
+        throw new Error("Failed to create post");
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.log(error);
-      return `Error creating post: ${error}`;
+      throw error;
     }
   },
   async updatePost(id, postData) {
     try {
       const response = await fetch(`${BASE_URL}/posts/${id}`, {
-        method: "GET",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(postData),
       });
-      return response;
+
+      if (!response.ok) {
+        throw new Error("Failed to update post");
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.log(error);
-      return `Error updating post: ${error}`;
+      throw error;
     }
   },
   async deletePost(id) {
@@ -102,9 +114,15 @@ export const api = {
       const response = await fetch(`${BASE_URL}/posts/${id}`, {
         method: "DELETE",
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete post");
+      }
+
+      return id; // Return the deleted post ID
     } catch (error) {
       console.log(error);
-      return `Error deleting post`;
+      throw error;
     }
   },
 };
