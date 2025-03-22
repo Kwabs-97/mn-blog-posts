@@ -2,6 +2,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { postFormSchema } from "@/lib/validations";
 
 const CATEGORIES = [
   "Web Development",
@@ -28,6 +29,7 @@ function PostForm({ initialData, onSubmit, isSubmitting }) {
       author: initialData?.author || "",
       categories: initialData?.categories || [],
     },
+    resolver: zodResolver(postFormSchema),
   });
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
