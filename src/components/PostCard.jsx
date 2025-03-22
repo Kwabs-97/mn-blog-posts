@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 function PostCard({post, onDelete}) {
+  console.log("post from PostCard", post.categories)
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-4">
     <div className="flex justify-between items-start mb-4">
@@ -33,7 +34,7 @@ function PostCard({post, onDelete}) {
     
     <div className="flex justify-between items-center">
       <div className="flex gap-2">
-        {post.categories.map((category, index) => (
+        {post?.categories?.map((category, index) => (
           <span
             key={index}
             className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded text-sm"
