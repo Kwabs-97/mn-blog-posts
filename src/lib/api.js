@@ -1,92 +1,65 @@
-const BASE_URL = 'http://localhost:3001'
+const API_BASE_URL = "http://localhost:3001";
 
 export const api = {
-    async getPosts(page=1, limit=10, search='', category='') {
-        const query = new URLSearchParams({
-            page: page.toString(),
-            limit: limit.toString(),
-            ...(search && { search }),
-            ...(category && { category }),
-        });
+  async getPosts(page = 1, limit = 10, search = "", category = "") {
+    const queryParams = new URLSearchParams({
+      _page: String(page),
+      _limit: String(limit),
+      ...(search && { q: search }),
+      ...(category && { categories_like: category }),
+    });
 
-        console.log(query.toString())
-        try {      
-            const allPostsResponse = await fetch(`${BASE_URL}/posts`);
-            const allPosts = await allPostsResponse.json();
-            
-            const response = await fetch(`${BASE_URL}/posts?${query.toString()}`);
-            const posts = await response.json();
-    
-            return { 
-                posts, 
-                total: allPosts.length || 10
-            };
-        } catch (error) {
-         console.log(error)   
-         return `Error fetching posts: ${error}`
-        }
-    },
+    const response = await fetch(`${API_BASE_URL}/posts?${queryParams}`);
+    const total = response.headers.get("X-Total-Count");
+    const posts = await response.json();
 
-    async getPost(id){
-        try {
-            const response = await fetch(`${BASE_URL}/posts/${id}`);
-            if (!response.ok) {
-                throw new Error('Post not found');
-            }
-            const post = await response.json();
-            return post;
-        } catch (error) {
-            console.log(error)   
-            return `Error fetching posts: ${error}` 
-        }
-    },
+    const allPostsResponse = await fetch(`${API_BASE_URL}/posts`);
+    const allPosts = await allPostsResponse.json();
+    return { posts, total: allPosts.length };
+  },
 
-    async createPost(post){
-
-        const posts = {
-            ...post,
-            id: Date.now(),
-            createdAt: new Date().toISOString(),
-        }
-        try {
-            const response = await fetch(`${BASE_URL}/posts`,{
-                method: "POST",
-                headers:{
-                    'Content-Type': 'Application/json'
-                },
-                body: JSON.stringify(posts)
-
-            })
-            return response;
-        } catch (error) {
-            console.log(error)   
-            return `Error creating post: ${error}` 
-        }
-    },
-    async updatePosts(id, postData){
-        try {       
-            const response = await fetch(`${BASE_URL}/posts/${id}`,{
-                method:"GET",
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData)
-            })
-            return response;
-        } catch (error) {
-            console.log(error)   
-            return `Error updating post: ${error}` 
-        }
-    },
-    async deletePost(id){
-        try {
-            const response = await fetch(`${BASE_URL}/posts/${id}`,{
-                method:"DELETE"
-            })
-        } catch (error) {
-            console.log(error)   
-            return `Error deleting post` 
-        }
+  async getPost(id) {
+    const response = await fetch(`${API_BASE_URL}/posts/${id}`);
+    if (!response.ok) {
+      throw new Error("Post not found");
     }
-}
+    return response.json();
+  },
 
+  async createPost(postData) {
+    const post = {
+      ...postData,
+      id: Date.now(),
+      createdAt: new Date().toISOString(),
+    };
+
+    const response = await fetch(`${API_BASE_URL}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+
+    return response.json();
+  },
+
+  async updatePost(id, postData) {
+    const response = await fetch(`${API_BASE_URL}/posts/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    return response.json();
+  },
+
+  async deletePost(id) {
+    const response = await fetch(`${API_BASE_URL}/posts/${id}`, {
+      method: "DELETE",
+    });
+    return response.ok;
+  },
+};
