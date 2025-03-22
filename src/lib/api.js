@@ -10,15 +10,15 @@ export const api = {
 
     console.log(query.toString());
     try {
-      const allPostsResponse = await fetch(`${BASE_URL}/posts`);
-      const allPosts = await allPostsResponse.json();
-
       const response = await fetch(`${BASE_URL}/posts?${query.toString()}`);
-      const posts = await response.json();
+      const data = await response.json();
+
+      // Get total count from the response headers or use the length of the response
+      const total = data.length || 0;
 
       return {
-        posts,
-        total: allPosts.length || 10,
+        posts: data,
+        total,
       };
     } catch (error) {
       console.log(error);

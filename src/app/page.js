@@ -4,15 +4,16 @@ import PostCard from "@/components/PostCard";
 import Search from "@/components/ui/search";
 import { useState } from "react";
 import Link from "next/link";
+
 import LoadingSpinner from "@/components/ui/Loading-Spinner";
 
 export default function Home() {
-  const [page, setPage] = useState("");
+  const [page, setPage] = useState(1);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const limit = 10;
 
-  const { isLoading, isError, error, data } = usePosts();
+  const { isLoading, isError, error, data } = usePosts(page, limit, search);
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -53,6 +54,7 @@ export default function Home() {
           />
         ))}
       </div>
+      <Pagination
     </div>
   );
 }
