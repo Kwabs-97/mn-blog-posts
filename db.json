@@ -1,16 +1,16 @@
 {
   "posts": [
     {
-      "id": "1",
       "title": "Frontend: A Comprehensive Guide",
-      "content": "In this comprehensive guide, we'll explore Frontend and its various applications in modern web development. Understanding Frontend is crucial for developers who want to stay ahead in the rapidly evolving tech landscape. We'll dive deep into the best practices, common pitfalls, and advanced techniques related to Frontend. Whether you're a beginner or an experienced developer, this post will provide valuable insights into Frontend. Let's examine how Frontend can improve your development workflow and enhance your projects.",
+      "content": "<p>In this comprehensive guide, we'll explore Frontend and its various applications in modern web development. Understanding Frontend is crucial for developers who want to stay ahead in the rapidly evolving tech landscape. We'll dive deep into the best practices, common pitfalls, and advanced techniques related to Frontend. Whether you're a beginner or an experienced developer, this post will provide valuable insights into Frontend. Let's examine how Frontend can improve your development workflow and enhance your projects.</p>",
       "author": "Linda Thompson",
-      "createdAt": "2023-02-04T08:45:05.619Z",
       "categories": [
         "Web Development",
         "JavaScript",
-        "TypeScript"
-      ]
+        "TypeScript",
+        "DevOps"
+      ],
+      "id": "1"
     },
     {
       "id": "2",
