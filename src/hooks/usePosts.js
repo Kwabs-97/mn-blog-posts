@@ -12,10 +12,10 @@ import {
   deletePost as deletePostAction,
 } from "../../store/postSlice";
 
-export function usePosts(page, limit, search, category) {
+export function usePosts(page, limit, search) {
   return useQuery({
-    queryKey: ["posts", page, limit, search, category],
-    queryFn: () => api.getPosts(page, limit, search, category),
+    queryKey: ["posts", page, limit, search],
+    queryFn: () => api.getPosts(page, limit, search),
   });
 }
 

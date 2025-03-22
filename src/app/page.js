@@ -17,7 +17,11 @@ export default function Home() {
     return <LoadingSpinner />;
   }
 
-  console.log(data);
+  // const filteredCategories = data.posts.filter((post) =>
+  //   post.category.includes(category)
+  // );
+  console.log(category);
+
   const totalPages = Math.ceil((data?.total || 0) / limit);
   if (isError) {
     <div className="h-screen w-screen px-5 flex items-center justify-center">
