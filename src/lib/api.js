@@ -36,7 +36,7 @@ export const api = {
   async createPost(post) {
     const posts = {
       ...post,
-      id: Date.now(),
+      id: Date.now().toString(),
       createdAt: new Date().toISOString(),
     };
     try {
