@@ -23,7 +23,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
 
   return (
     <nav className="flex justify-center flex-wrap">
-      <ul className="flex items-center gap-1 flex-wrap">
+      <ul className="flex items-center gap-1 flex-wrap px-4">
         <li>
           <Button
             onClick={() => onPageChange(currentPage - 1)}
