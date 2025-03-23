@@ -88,7 +88,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+      <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 dark:border-gray-700 py-3">
         <Pagination
           currentPage={page}
           totalPages={totalPages}

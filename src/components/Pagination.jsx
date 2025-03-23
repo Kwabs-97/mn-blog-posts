@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "./ui/button";
 export function Pagination({ currentPage, totalPages, onPageChange }) {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const maxVisiblePages = 5;
@@ -21,27 +22,27 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
   const visiblePages = getVisiblePages();
 
   return (
-    <nav className="flex justify-center mt-8 flex-wrap">
+    <nav className="flex justify-center flex-wrap">
       <ul className="flex items-center gap-1 flex-wrap">
         <li>
-          <button
+          <Button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
+            className="hover:text-black"
           >
             Previous
-          </button>
+          </Button>
         </li>
 
         {currentPage > 3 && totalPages > maxVisiblePages && (
           <>
             <li>
-              <button
+              <Button
                 onClick={() => onPageChange(1)}
                 className="px-3 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 1
-              </button>
+              </Button>
             </li>
             <li className="px-2">...</li>
           </>
@@ -49,16 +50,16 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
 
         {visiblePages.map((page) => (
           <li key={page}>
-            <button
+            <Button
               onClick={() => onPageChange(page)}
               className={`px-3 py-1 rounded-md ${
                 currentPage === page
                   ? "bg-blue-500 text-white"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                  : "hover:bg-gray-300 hover:text-black dark:hover:bg-gray-700"
               }`}
             >
               {page}
-            </button>
+            </Button>
           </li>
         ))}
 
@@ -66,24 +67,24 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
           <>
             <li className="px-2">...</li>
             <li>
-              <button
+              <Button
                 onClick={() => onPageChange(totalPages)}
-                className="px-3 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="px-3 py-1 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 hover:text-black"
               >
                 {totalPages}
-              </button>
+              </Button>
             </li>
           </>
         )}
 
         <li>
-          <button
+          <Button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             className="px-3 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
           >
             Next
-          </button>
+          </Button>
         </li>
       </ul>
     </nav>
