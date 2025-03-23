@@ -1,19 +1,6 @@
 {
   "posts": [
     {
-      "title": "Frontend: A Comprehensive Guide                       ",
-      "content": "In this comprehensive guide, we'll explore Frontend and its various applications in modern web development. Understanding Frontend is crucial for developers who want to stay ahead in the rapidly evolving tech landscape. We'll dive deep into the best practices, common pitfalls, and advanced techniques related to Frontend. Whether you're a beginner or an experienced developer, this post will provide valuable insights into Frontend. Let's examine how Frontend can improve your development workflow and enhance your projects.",
-      "author": "Linda Thompson",
-      "categories": [
-        "Web Development",
-        "JavaScript",
-        "TypeScript",
-        "Frontend",
-        "DevOps"
-      ],
-      "id": "1"
-    },
-    {
       "id": "2",
       "title": "Web Development: A Comprehensive Guide",
       "content": "In this comprehensive guide, we'll explore Web Development and its various applications in modern web development. Understanding Web Development is crucial for developers who want to stay ahead in the rapidly evolving tech landscape. We'll dive deep into the best practices, common pitfalls, and advanced techniques related to Web Development. Whether you're a beginner or an experienced developer, this post will provide valuable insights into Web Development. Let's examine how Web Development can improve your development workflow and enhance your projects.",
@@ -3881,27 +3868,6 @@
         "TypeScript"
       ],
       "createdAt": "2025-03-22T16:47:18.379Z"
-    },
-    {
-      "id": "1742662249187",
-      "title": "New test, again",
-      "content": "page.bundle.js:6 A non-serializable value was detected in the state, in the path: `posts.posts.2`. Value: Response {type: 'cors', url: 'http://localhost:3001/posts', redirected: false, status: 201, ok: true, …}body: ReadableStreamlocked: false[[Prototype]]: ReadableStreambodyUsed: falseheaders: Headers {}[[Prototype]]: Headersok: trueredirected: falsestatus: 201statusText: \"Created\"type: \"cors\"url: \"http://localhost:3001/posts\"[[Prototype]]: Response \nTake a look at the reducer(s) handling this action type: posts/addPost.\n(See https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state)",
-      "author": "Samuel",
-      "categories": [
-        "Web Development",
-        "CSS"
-      ],
-      "createdAt": "2025-03-22T16:50:49.187Z"
-    },
-    {
-      "id": "1742665742530",
-      "title": "Here again with Tiny mce try out",
-      "content": "<p>this content should be allowed to pass but i don't know what I'm writing. 50 characters you say, it go over you for here. <strong>GET THIS AND LET'S SEE</strong></p>",
-      "author": "SamDev",
-      "categories": [
-        "DevOps"
-      ],
-      "createdAt": "2025-03-22T17:49:02.530Z"
     }
   ]
 }
