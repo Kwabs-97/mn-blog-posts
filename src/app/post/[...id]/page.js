@@ -36,7 +36,7 @@ function page() {
 
   const { data, isLoading, isError, error: queryError } = usePost(id);
   const deletePost = useDeletePost();
-
+  console.log(data);
   useEffect(() => {
     if (data) {
       dispatch(setCurrentPost(data));
@@ -104,7 +104,11 @@ function page() {
         </div>
         <div className="flex flex-row items-center gap-2">
           <Clock size={12} />
-          <time>{new Date(currentPost?.createdAt).toDateString()}</time>
+          <time>
+            {currentPost?.createdAt
+              ? new Date(currentPost.createdAt).toLocaleString()
+              : new Date().toLocaleString()}
+          </time>
         </div>
       </footer>
       <aside className="flex flex-row items-center gap-2">

@@ -16,7 +16,7 @@ function EditPage() {
     try {
       await updatePost.mutateAsync({ id, data });
       router.push(`/post/${id}`);
-      toast.success("Post has successfully been deleted ");
+      toast.success("Post has successfully been updated ");
     } catch (error) {
       toast.error("error updating post");
       console.log("Error updating post:", error);
