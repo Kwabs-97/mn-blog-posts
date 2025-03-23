@@ -58,17 +58,7 @@ function PostForm({ initialData, onSubmit, isSubmitting, isSuccess }) {
           Content
         </label>
 
-        {/* <EditorTinyMce
-          value={register("content").value || initialData?.content || ""}
-          onChange={(content) => {
-            register("content").onChange({
-              target: {
-                value: content,
-                name: "content",
-              },
-            });
-          }}
-        /> */}
+    
         <Textarea className="" {...register("content")} rows={10} />
         {errors.content && (
           <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
