@@ -1,32 +1,25 @@
 "use client";
-import { usePosts } from "@/hooks/usePosts";
+import { usePosts, useDeletePost, usePost } from "@/hooks/usePosts";
+import PostCard from "@/components/PostCard";
 import Search from "@/components/ui/search";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
-
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Pagination } from "@/components/Pagination";
 import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { setFilters } from "../../store/postSlice";
-import dynamic from "next/dynamic";
-
-const PostCard = dynamic(() => import("@/components/PostCard"));
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const { page, category, limit, search } = useAppSelector(
+  const { page, category, search, limit } = useAppSelector(
     (state) => state.posts.filters
   );
   const loading = useAppSelector((state) => state.posts.loading);
   const error = useAppSelector((state) => state.posts.error);
-  // const [page, setPage] = useState(1);
-  // const [category, setCategory] = useState("");
-  // const [search, setSearch] = useState("");
-  // const limit = 10;
 
-  const { data, isLoading } = usePosts(page, limit);
+  const { data } = usePosts(page, limit);
 
   const filteredPosts = useMemo(() => {
     if (!data?.posts) return [];
@@ -35,22 +28,21 @@ export default function Home() {
 
     // Apply search filter
     if (search) {
-      const searchTerm = search.toLowerCase().trim();
-      posts = posts.filter((post) => {
-        const titleMatch = post.title?.toLowerCase().includes(searchTerm);
-        const authorMatch = post.author?.toLowerCase().includes(searchTerm);
-        const contentMatch = post.content?.toLowerCase().includes(searchTerm);
-        const categoryMatch = post.categories?.some((cat) =>
-          cat.toLowerCase().includes(searchTerm)
-        );
-
-        return titleMatch || authorMatch || contentMatch || categoryMatch;
-      });
+      const searchTerm = search.toLowerCase();
+      posts = posts.filter(
+        (post) =>
+          post.title.toLowerCase().includes(searchTerm) ||
+          post.author.toLowerCase().includes(searchTerm) ||
+          post.content.toLowerCase().includes(searchTerm) ||
+          post.categories.some((category) =>
+            category.toLowerCase().includes(searchTerm)
+          )
+      );
     }
 
     // Apply category filter
     if (category) {
-      posts = posts.filter((post) => post.categories?.includes(category));
+      posts = posts.filter((post) => post.categories.includes(category));
     }
 
     return posts;
@@ -67,7 +59,7 @@ export default function Home() {
     dispatch(setFilters({ page: newPage }));
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
         <LoadingSpinner />
@@ -78,7 +70,7 @@ export default function Home() {
   if (error) {
     return (
       <div className="h-screen w-screen px-5 flex items-center justify-center">
-        <p className="text-red-400 font-semibold">{`Error loading page. Please try again later`}</p>
+        <p className="text-red-400 font-semibold">{`Error loading page. -${error}. Please try again later`}</p>
       </div>
     );
   }
