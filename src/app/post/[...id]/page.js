@@ -22,6 +22,7 @@ import {
   setLoading,
   setError,
 } from "../../../../store/postSlice";
+import { toast } from "sonner";
 
 function page() {
   const { id } = useParams();
@@ -56,8 +57,10 @@ function page() {
     try {
       setIsDeleting(true);
       await deletePost.mutateAsync(id);
+      toast.success("Post has successfully been deleted ");
       router.push("/");
     } catch (error) {
+      toast.error("Error deleting post");
       console.log("error deleting post");
     }
   };
