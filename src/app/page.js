@@ -1,5 +1,5 @@
 "use client";
-import { usePosts, useDeletePost, usePost } from "@/hooks/usePosts";
+import { usePosts } from "@/hooks/usePosts";
 import Search from "@/components/ui/search";
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -35,20 +35,22 @@ export default function Home() {
 
     // Apply search filter
     if (search) {
-      const searchTerm = search.toLowerCase();
-      posts = posts.filter(
-        (post) =>
-          post.title.toLowerCase().includes(searchTerm) ||
-          post.content.toLowerCase().includes(searchTerm) ||
-          post.categories.some((category) =>
-            category.toLowerCase().includes(searchTerm)
-          )
-      );
+      const searchTerm = search.toLowerCase().trim();
+      posts = posts.filter((post) => {
+        const titleMatch = post.title?.toLowerCase().includes(searchTerm);
+        const authorMatch = post.author?.toLowerCase().includes(searchTerm);
+        const contentMatch = post.content?.toLowerCase().includes(searchTerm);
+        const categoryMatch = post.categories?.some((cat) =>
+          cat.toLowerCase().includes(searchTerm)
+        );
+
+        return titleMatch || authorMatch || contentMatch || categoryMatch;
+      });
     }
 
     // Apply category filter
     if (category) {
-      posts = posts.filter((post) => post.categories.includes(category));
+      posts = posts.filter((post) => post.categories?.includes(category));
     }
 
     return posts;
