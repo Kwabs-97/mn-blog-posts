@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "./input";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import { setFilters } from "../../../store/postSlice";
+import { set } from "react-hook-form";
 
 const CATEGORIES = [
   "All",
@@ -16,14 +19,19 @@ const CATEGORIES = [
   "DevOps",
   "AI/ML",
 ];
-function Search({ onSearch, onCategoryChange, selectedCategory }) {
-  const [searchTerm, setSearchTerm] = useState("");
+function Search() {
+  const dispatch = useAppDispatch();
+  const { search, category } = useAppSelector((state) => state.posts.filters);
+  const [searchTerm, setSearchTerm] = useState(search);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   useEffect(() => {
-    onSearch(debouncedSearchTerm);
-  }, [debouncedSearchTerm, onSearch]);
+    dispatch(setFilters({ search: debouncedSearchTerm }));
+  }, [debouncedSearchTerm, dispatch]);
 
+  const handleCategoryChange = (newCategory) => {
+    dispatch(setFilters({ category: newCategory }));
+  };
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
       <div className="relative flex-1">
@@ -50,8 +58,8 @@ function Search({ onSearch, onCategoryChange, selectedCategory }) {
       </div>
 
       <select
-        value={selectedCategory}
-        onChange={(e) => onCategoryChange(e.target.value)}
+        value={category}
+        onChange={(e) => handleCategoryChange(e.target.value)}
         className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600"
       >
         {CATEGORIES.map((category) => (

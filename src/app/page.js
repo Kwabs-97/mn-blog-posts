@@ -13,15 +13,18 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { setFilters } from "../../store/postSlice";
 
 export default function Home() {
-
   const dispatch = useAppDispatch();
-  const {page, category, limit, search} = useAppSelector((state) => state.posts.filters );
+  const { page, category, limit, search } = useAppSelector(
+    (state) => state.posts.filters
+  );
+  const loading = useAppSelector((state) => state.posts.loading);
+  const error = useAppSelector((state) => state.posts.error);
   // const [page, setPage] = useState(1);
   // const [category, setCategory] = useState("");
   // const [search, setSearch] = useState("");
   // const limit = 10;
 
-  const { isLoading, isError, error, data } = usePosts(page, limit);
+  const { data } = usePosts(page, limit);
 
   const filteredPosts = useMemo(() => {
     if (!data?.posts) return [];
@@ -57,10 +60,10 @@ export default function Home() {
   }, [filteredPosts, page, limit]);
 
   const handlePageChange = (newPage) => {
-    setPage(newPage);
+    dispatch(setFilters({ page: newPage }));
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
         <LoadingSpinner />
@@ -68,10 +71,10 @@ export default function Home() {
     );
   }
 
-  if (isError) {
+  if (error) {
     return (
       <div className="h-screen w-screen px-5 flex items-center justify-center">
-        <p className="text-red-400 font-semibold">{`Error loading page. -${error}. Please try again later`}</p>
+        <p className="text-red-400 font-semibold">{`Error loading page. Please try again later`}</p>
       </div>
     );
   }
@@ -95,11 +98,7 @@ export default function Home() {
           </nav>
         </header>
         <main>
-          <Search
-            onSearch={setSearch}
-            onCategoryChange={setCategory}
-            selectedCategory={category}
-          />
+          <Search />
           {paginatedPosts.length < 1 ? (
             <div>
               <p>No posts found...</p>
