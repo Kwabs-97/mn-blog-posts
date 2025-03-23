@@ -9,12 +9,17 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { Pagination } from "@/components/Pagination";
 import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import { setFilters } from "../../store/postSlice";
 
 export default function Home() {
-  const [page, setPage] = useState(1);
-  const [category, setCategory] = useState("");
-  const [search, setSearch] = useState("");
-  const limit = 10;
+
+  const dispatch = useAppDispatch();
+  const {page, category, limit, search} = useAppSelector((state) => state.posts.filters );
+  // const [page, setPage] = useState(1);
+  // const [category, setCategory] = useState("");
+  // const [search, setSearch] = useState("");
+  // const limit = 10;
 
   const { isLoading, isError, error, data } = usePosts(page, limit);
 
