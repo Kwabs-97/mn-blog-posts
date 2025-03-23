@@ -19,7 +19,7 @@ export default function Home() {
   const loading = useAppSelector((state) => state.posts.loading);
   const error = useAppSelector((state) => state.posts.error);
 
-  const { data } = usePosts(page, limit);
+  const { data, isLoading } = usePosts(page, limit);
 
   const filteredPosts = useMemo(() => {
     if (!data?.posts) return [];
@@ -59,14 +59,6 @@ export default function Home() {
     dispatch(setFilters({ page: newPage }));
   };
 
-  if (loading) {
-    return (
-      <div className="w-screen h-screen flex items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="h-screen w-screen px-5 flex items-center justify-center">
@@ -95,9 +87,16 @@ export default function Home() {
         </header>
         <main>
           <Search />
-          {paginatedPosts.length < 1 ? (
-            <div>
-              <p>No posts found...</p>
+          {isLoading ? (
+            <div className="flex items-center justify-center min-h-[50vh] flex-row gap-4">
+              <p>LOading blogs</p>
+              <LoadingSpinner color="blue" />
+            </div>
+          ) : paginatedPosts.length < 1 ? (
+            <div className="flex items-center justify-center min-h-[50vh]">
+              <p className="text-gray-500 dark:text-gray-400 text-lg">
+                No posts found
+              </p>
             </div>
           ) : (
             <div className="space-y-6">

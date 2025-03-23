@@ -7,6 +7,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /src/app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 
   # api:
   #   build:
