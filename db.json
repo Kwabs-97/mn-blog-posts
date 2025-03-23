@@ -3836,17 +3836,6 @@
       ]
     },
     {
-      "id": "1742661400187",
-      "title": "Samuel test",
-      "content": "this is for test add new blog. additional words to beat my own schema validation.",
-      "author": "Samuel",
-      "categories": [
-        "Web Development",
-        "AI/ML"
-      ],
-      "createdAt": "2025-03-22T16:36:40.187Z"
-    },
-    {
       "id": "1742661849212",
       "title": "Testing title",
       "content": "lorem ipsum to test if my schema validation will pass",
@@ -3867,6 +3856,29 @@
         "TypeScript"
       ],
       "createdAt": "2025-03-22T16:47:18.379Z"
+    },
+    {
+      "id": "1742748109392",
+      "title": "This is a new post to test",
+      "content": "Did All work as expected?\nI should think so. we can expect some more data since we're using schema validation and we want more than 50 characters",
+      "author": "Samuel again",
+      "categories": [
+        "Web Development",
+        "DevOps"
+      ],
+      "createdAt": "2025-03-23T16:41:49.392Z"
+    },
+    {
+      "id": "1742749086270",
+      "title": "testing toast",
+      "content": "This is to test toaster for much more content. I really don't know what to write here but let's just hope its over 50 characters",
+      "author": "SamuelKbz",
+      "categories": [
+        "React",
+        "TypeScript",
+        "AI/ML"
+      ],
+      "createdAt": "2025-03-23T16:58:06.271Z"
     }
   ]
 }

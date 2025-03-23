@@ -1,26 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCreatePost } from "@/hooks/usePosts";
 import PostForm from "@/components/PostForm";
+import { useState } from "react";
+import { toast } from "sonner";
 
 function AddPost() {
+  const [postSuccess, setPostSuccess] = useState(false);
   const router = useRouter();
   const createPost = useCreatePost();
-  const { mutateAsync, isError, error, isPending } = createPost;
+  const { mutateAsync, isError, error, isPending, isSuccess } = createPost;
+  useEffect(() => {
+    if (isSuccess) {
+      toast("Blog has been created successfully");
+    }
+  }, [isSuccess]);
+
   const handleSubmit = async (data) => {
     try {
       await mutateAsync(data);
-
-      if (isError) {
-        console.log("Error creating posts", error);
-        return;
-      }
-
-      // navigate back home after successfully adding to posts
+      toast.success("Blog created successfully");
+      // navigate to post after successfully adding to posts
       router.push("/");
     } catch (error) {
+      toast.error("Failed to create blog post");
       console.log(error);
     }
   };
