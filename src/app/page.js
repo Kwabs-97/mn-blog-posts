@@ -26,7 +26,7 @@ export default function Home() {
   // const [search, setSearch] = useState("");
   // const limit = 10;
 
-  const { data } = usePosts(page, limit);
+  const { data, isLoading } = usePosts(page, limit);
 
   const filteredPosts = useMemo(() => {
     if (!data?.posts) return [];
@@ -65,7 +65,7 @@ export default function Home() {
     dispatch(setFilters({ page: newPage }));
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
         <LoadingSpinner />
