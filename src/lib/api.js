@@ -1,21 +1,13 @@
 const BASE_URL = "http://localhost:3001";
 
 export const api = {
-  async getPosts(page = 1, limit = 10) {
+  async getPosts() {
     try {
       const response = await fetch(`${BASE_URL}/posts`);
-      const allPosts = await response.json();
-      const posts = Array.isArray(allPosts) ? allPosts : [];
-      const total = posts.length;
-
-      // Handle pagination on the frontend
-      const startIndex = (page - 1) * limit;
-      const endIndex = startIndex + limit;
-      const paginatedPosts = posts.slice(startIndex, endIndex);
-
+      const posts = await response.json();
       return {
-        posts: paginatedPosts,
-        total: total,
+        posts: Array.isArray(posts) ? posts : [],
+        total: Array.isArray(posts) ? posts.length : 0,
       };
     } catch (error) {
       console.error("API Error:", error);
