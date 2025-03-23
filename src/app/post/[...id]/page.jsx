@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useDeletePost, usePost } from "@/hooks/usePosts";
 import { useParams, useRouter } from "next/navigation";
@@ -13,18 +13,25 @@ function page() {
   const { data, isLoading, isError, error } = usePost(id);
   const router = useRouter();
 
+  const [delPost, setDelPost] = useState(false);
+
   const deletePost = useDeletePost();
 
   const handleDelete = async () => {
     try {
-    } catch (error) {}
+      if (delPost) {
+        await deletePost.mutateAsync(id);
+      }
+    } catch (error) {
+      console.log("error deleting post");
+    }
   };
 
   function handleEditNavigation() {
     router.push(`/edit/${id}`);
   }
   return (
-    <div className="p-6 flex flex-col gap-4 px-14 ">
+    <div className="p-6 flex flex-col gap-4 px-14 lg:items-center lg:justify-center">
       <header
         id="blog card"
         className="flex flex-row justify-between items-center"
@@ -33,7 +40,7 @@ function page() {
         <p className="font-semibold ">{data?.title}</p>
       </header>
       <main className="prose dark:prose-invert max-w-none">
-        <PostContent content={data?.content} />
+        <p>{data?.content}</p>
       </main>
       <footer className="flex flex-col gap-2 justify-center">
         <div>
