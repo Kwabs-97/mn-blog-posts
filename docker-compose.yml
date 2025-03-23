@@ -20,3 +20,5 @@ services:
       - "3001:3001"
     volumes:
       - ./db.json:/app/db.json
+    environment:
+      - NODE_ENV=development

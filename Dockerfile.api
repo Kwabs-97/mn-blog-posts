@@ -1,17 +1,18 @@
-FROM node:20-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
 
+# Install dependencies
+RUN npm install
 
-RUN npm ci
+# Copy the rest of the application
+COPY . .
 
-
-COPY db.json ./
-
-
+# Expose port 3001
 EXPOSE 3001
 
-
-CMD ["npm", "run", "api"] 
+# Start json-server
+CMD ["npx", "json-server", "--watch", "db.json", "--port", "3001"] 

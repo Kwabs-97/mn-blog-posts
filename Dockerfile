@@ -1,33 +1,21 @@
-# Build stage
-FROM node:20-alpine AS builder
+FROM node:18-alpine
 
 WORKDIR /app
 
-
+# Copy package files
 COPY package*.json ./
 
-RUN npm ci
+# Install dependencies
+RUN npm install
 
-
+# Copy the rest of the application
 COPY . .
 
+# Build the Next.js app
 RUN npm run build
 
-
-FROM node:20-alpine AS runner
-
-WORKDIR /app
-
-
-
-
-COPY --from=builder /app/next.config.mjs ./
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-
+# Expose port 3000
 EXPOSE 3000
 
-# Start the application
-CMD ["node", "server.js"] 
+# Start the production server
+CMD ["npm", "start"] 
