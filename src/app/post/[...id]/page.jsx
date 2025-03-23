@@ -1,10 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import { useDeletePost, usePost } from "@/hooks/usePosts";
 import { useParams, useRouter } from "next/navigation";
 import NavigateBack from "@/components/ArrowLeft";
-import PostContent from "@/components/PostContent";
 import { Clock, Trash2, FilePenLine } from "lucide-react";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Button } from "@/components/ui/button";
