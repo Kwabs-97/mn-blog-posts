@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import PostForm from "@/components/PostForm";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { toast } from "sonner";
 
 function EditPage() {
   const { id } = useParams();
@@ -15,7 +16,9 @@ function EditPage() {
     try {
       await updatePost.mutateAsync({ id, data });
       router.push(`/post/${id}`);
+      toast.success("Post has successfully been deleted ");
     } catch (error) {
+      toast.error("error updating post");
       console.log("Error updating post:", error);
       return;
     }
