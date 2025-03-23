@@ -18,14 +18,41 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import {
+  setCurrentPost,
+  setLoading,
+  setError,
+} from "../../../../store/postSlice";
 
 function page() {
   const { id } = useParams();
-  const { data, isLoading, isError, error } = usePost(id);
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
+  const dispatch = useAppDispatch();
 
+  const currentPost = useAppSelector((state) => state.posts.currentPost);
+  const loading = useAppSelector((state) => state.posts.loading);
+  const error = useAppSelector((state) => state.posts.error);
+
+  const { data, isLoading, isError, error: queryError } = usePost(id);
   const deletePost = useDeletePost();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setCurrentPost(data));
+    }
+  }, [data, dispatch]);
+
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setError(queryError));
+    }
+  }, [isError, queryError, dispatch]);
 
   const handleDelete = async () => {
     try {
@@ -40,6 +67,23 @@ function page() {
   function handleEditNavigation() {
     router.push(`/edit/${id}`);
   }
+
+  if (loading) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-screen w-screen px-5 flex items-center justify-center">
+        <p className="text-red-400 font-semibold">{`Error loading post. -${error}. Please try again later`}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 flex flex-col gap-4 lg:px-14">
       <header
@@ -47,19 +91,19 @@ function page() {
         className="flex flex-row justify-between items-center"
       >
         <NavigateBack />
-        <p className="font-semibold ">{data?.title}</p>
+        <p className="font-semibold ">{currentPost?.title}</p>
       </header>
       <main className="prose dark:prose-invert max-w-none">
-        <p>{data?.content}</p>
+        <p>{currentPost?.content}</p>
       </main>
       <footer className="flex flex-col gap-2 justify-center">
         <div>
           <span>written by:</span>
-          <p className="font-semibold">{data?.author}</p>
+          <p className="font-semibold">{currentPost?.author}</p>
         </div>
         <div className="flex flex-row items-center gap-2">
           <Clock size={12} />
-          <time>{new Date().toDateString()}</time>
+          <time>{new Date(currentPost?.createdAt).toDateString()}</time>
         </div>
       </footer>
       <aside className="flex flex-row items-center gap-2">
