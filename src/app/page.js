@@ -2,7 +2,7 @@
 import { usePosts, useDeletePost, usePost } from "@/hooks/usePosts";
 import PostCard from "@/components/PostCard";
 import Search from "@/components/ui/search";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 
 import { LoadingSpinner } from "@/components/loading-spinner";
@@ -16,14 +16,40 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const limit = 10;
 
-  const { isLoading, isError, error, data } = usePosts(
-    page,
-    limit,
-    search,
-    category
-  );
+  const { isLoading, isError, error, data } = usePosts(page, limit);
 
-  const deletePost = useDeletePost();
+  const filteredPosts = useMemo(() => {
+    if (!data?.posts) return [];
+
+    let posts = [...data.posts];
+
+    // Apply search filter
+    if (search) {
+      const searchTerm = search.toLowerCase();
+      posts = posts.filter(
+        (post) =>
+          post.title.toLowerCase().includes(searchTerm) ||
+          post.content.toLowerCase().includes(searchTerm) ||
+          post.categories.some((category) =>
+            category.toLowerCase().includes(searchTerm)
+          )
+      );
+    }
+
+    // Apply category filter
+    if (category) {
+      posts = posts.filter((post) => post.categories.includes(category));
+    }
+
+    return posts;
+  }, [data?.posts, search, category]);
+
+  // Apply pagination after filtering
+  const paginatedPosts = useMemo(() => {
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    return filteredPosts.slice(startIndex, endIndex);
+  }, [filteredPosts, page, limit]);
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -32,7 +58,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
-        <LoadingSpinner />;
+        <LoadingSpinner />
       </div>
     );
   }
@@ -45,21 +71,7 @@ export default function Home() {
     );
   }
 
-  if (!data?.posts || data.posts.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-2 flex flex-col gap-4 items-center justify-center">
-        <p>No posts found</p>
-        <Link
-          href="/new-post"
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-        >
-          New Post
-        </Link>
-      </div>
-    );
-  }
-
-  const totalPages = Math.ceil((data?.total || 0) / limit);
+  const totalPages = Math.ceil(filteredPosts.length / limit);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -77,24 +89,34 @@ export default function Home() {
             </Link>
           </nav>
         </header>
-        <Search onSearch={setSearch} onCategoryChange={setCategory} />
-        <div className="space-y-6">
-          {data?.posts.map((post) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              // onDelete={handleDelete}
-            />
-          ))}
+        <main>
+          <Search
+            onSearch={setSearch}
+            onCategoryChange={setCategory}
+            selectedCategory={category}
+          />
+          {paginatedPosts.length < 1 ? (
+            <div>
+              <p>No posts found...</p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {paginatedPosts.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          )}
+        </main>
+      </div>
+      <footer>
+        <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 dark:border-gray-700 py-3">
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
-      </div>
-      <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 dark:border-gray-700 py-3">
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      </footer>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import PostContent from "./PostContent";
 import { useRouter } from "next/navigation";
 
-function PostCard({ post, onDelete }) {
+function PostCard({ post }) {
   const router = useRouter();
   function handleNavigation() {
     router.push(`/post/${post.id}`);

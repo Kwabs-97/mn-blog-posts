@@ -1,41 +1,20 @@
 const BASE_URL = "http://localhost:3001";
 
 export const api = {
-  async getPosts(page = 1, limit = 10, search = "") {
-    const query = new URLSearchParams({
-      page: page.toString(),
-      limit: limit.toString(),
-      ...(search && { search }),
-    });
-
-    console.log("Fetching posts with query:", query.toString());
+  async getPosts(page = 1, limit = 10) {
     try {
-      // First get total count
-      const totalResponse = await fetch(`${BASE_URL}/posts`);
-      const allPosts = await totalResponse.json();
-      const total = Array.isArray(allPosts) ? allPosts.length : 0;
+      const response = await fetch(`${BASE_URL}/posts`);
+      const allPosts = await response.json();
+      const posts = Array.isArray(allPosts) ? allPosts : [];
+      const total = posts.length;
 
-      // Then get paginated posts
-      const response = await fetch(`${BASE_URL}/posts?${query.toString()}`);
-      console.log("Response status:", response.status);
-      const data = await response.json();
-      console.log("API Response:", data);
+      // Handle pagination on the frontend
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      const paginatedPosts = posts.slice(startIndex, endIndex);
 
-      // If the API returns an array, slice it for pagination
-      if (Array.isArray(data)) {
-        const startIndex = (page - 1) * limit;
-        const endIndex = startIndex + limit;
-        const paginatedPosts = data.slice(startIndex, endIndex);
-
-        return {
-          posts: paginatedPosts,
-          total: total,
-        };
-      }
-
-      // If the API returns an object with posts and total
       return {
-        posts: data.posts || [],
+        posts: paginatedPosts,
         total: total,
       };
     } catch (error) {
