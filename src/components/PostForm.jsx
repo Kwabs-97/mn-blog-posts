@@ -3,7 +3,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postFormSchema } from "@/lib/validations";
-import EditorTinyMce from "./Editor";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -58,7 +57,6 @@ function PostForm({ initialData, onSubmit, isSubmitting, isSuccess }) {
           Content
         </label>
 
-    
         <Textarea className="" {...register("content")} rows={10} />
         {errors.content && (
           <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
