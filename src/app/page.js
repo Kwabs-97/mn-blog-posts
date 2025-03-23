@@ -1,6 +1,5 @@
 "use client";
 import { usePosts, useDeletePost, usePost } from "@/hooks/usePosts";
-import PostCard from "@/components/PostCard";
 import Search from "@/components/ui/search";
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -11,6 +10,9 @@ import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { setFilters } from "../../store/postSlice";
+import dynamic from "next/dynamic";
+
+const PostCard = dynamic(() => import("@/components/PostCard"));
 
 export default function Home() {
   const dispatch = useAppDispatch();
