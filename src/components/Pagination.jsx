@@ -21,8 +21,8 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
   const visiblePages = getVisiblePages();
 
   return (
-    <nav className="flex justify-center mt-8">
-      <ul className="flex items-center gap-1">
+    <nav className="flex justify-center mt-8 flex-wrap">
+      <ul className="flex items-center gap-1 flex-wrap">
         <li>
           <button
             onClick={() => onPageChange(currentPage - 1)}

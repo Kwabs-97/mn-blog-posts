@@ -4,6 +4,7 @@ import { useUpdatePost, usePost } from "@/hooks/usePosts";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import PostForm from "@/components/PostForm";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 function EditPage() {
   const { id } = useParams();
@@ -13,17 +14,14 @@ function EditPage() {
   const handleSubmit = async (data) => {
     try {
       await updatePost.mutateAsync({ id, data });
+      router.push(`/post/${id}`);
     } catch (error) {
       console.log("Error updating post:", error);
       return;
     }
   };
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   if (error || !post) {
