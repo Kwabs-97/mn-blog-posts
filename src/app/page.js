@@ -108,14 +108,13 @@ export default function Home() {
           )}
         </main>
       </div>
-      <footer>
-        <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 dark:border-gray-700 py-3">
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+
+      <footer className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 dark:border-gray-700 py-3">
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </footer>
     </div>
   );
