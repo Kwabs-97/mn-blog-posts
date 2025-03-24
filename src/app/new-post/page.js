@@ -23,6 +23,15 @@ function AddPost() {
       console.log(error);
     }
   };
+  if (isError) {
+    console.log(error);
+    return (
+      <div className="min-h-[50%] items-center flex justify-center flex-row gap-5">
+        <p> uh-oh. We couldn't create your post. </p>
+        <p>Please try again later</p>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-4xl mx-auto px-4">
