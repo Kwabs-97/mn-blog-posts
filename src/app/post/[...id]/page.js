@@ -47,7 +47,7 @@ function page() {
   console.log(data);
 
   // updating loading, error and current post state in redux
-  // useEffect so i don't trigger rerenders
+
   useEffect(() => {
     if (data) {
       dispatch(setCurrentPost(data));
@@ -71,6 +71,7 @@ function page() {
       toast.success("Post has successfully been deleted ");
       router.push("/");
     } catch (error) {
+      setIsDeleting(false);
       toast.error("Error deleting post");
       console.log("error deleting post");
     }
@@ -105,8 +106,11 @@ function page() {
         <NavigateBack />
         <p className="font-semibold ">{currentPost?.title}</p>
       </header>
-      <main className="prose dark:prose-invert max-w-none">
+      <main className="prose dark:prose-invert max-w-none flex flex-col gap-5">
         <p>{currentPost?.content}</p>
+        <div>
+          
+        </div>
       </main>
       <footer className="flex flex-col gap-2 justify-center">
         <div>

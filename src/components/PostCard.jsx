@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import PostContent from "./PostContent";
 import { useRouter } from "next/navigation";
+import CategoryCard from "./category-card";
 
 function PostCard({ post }) {
   const router = useRouter();
@@ -34,12 +35,7 @@ function PostCard({ post }) {
           </div>
           <div className="flex flex-row gap-2 flex-wrap">
             {post?.categories?.map((category, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded text-sm"
-              >
-                {category}
-              </span>
+              <CategoryCard key={index}>{category}</CategoryCard>
             ))}
           </div>
         </div>
