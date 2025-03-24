@@ -70,14 +70,6 @@ function page() {
   // get the timestamp of createdAt handling it on client side
   const [time, setTime] = useState("");
 
-  useEffect(() => {
-    setTime(
-      data?.createdAt
-        ? new Date(createdAt).toLocaleString()
-        : new Date().toLocaleString()
-    );
-  }, [data?.createdAt]);
-
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
@@ -137,7 +129,7 @@ function page() {
         </div>
         <div className="flex flex-row items-center gap-2">
           <Clock size={12} />
-          <time>{time}</time>
+          <time>{currentPost ? currentPost.createdAt : ""}</time>
         </div>
       </footer>
       <aside className="flex flex-row items-center gap-2">
