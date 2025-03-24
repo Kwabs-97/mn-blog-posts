@@ -48,6 +48,8 @@ This will start both the frontend and API containers.
 ## API
 
 The application uses JSON Server as a mock API. The `db.json` file is hosted on Render and contains the blog posts data.
+However, the mock API is successfully hosted on render so have fun and don't worry so much about that. `db.json` file shows the
+exact schema of dataset.
 
 ## Available Scripts
 
@@ -55,7 +57,6 @@ The application uses JSON Server as a mock API. The `db.json` file is hosted on 
 - `npm run build` - Build the application for production
 - `npm run start` - Start the production server
 - `npm run lint` - Run ESLint
-- `npm run api` - Start the JSON Server API
 
 ## Tech Stack
 
