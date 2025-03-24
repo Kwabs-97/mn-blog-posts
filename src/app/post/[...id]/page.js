@@ -23,6 +23,7 @@ import {
   setError,
 } from "../../../../store/postSlice";
 import { toast } from "sonner";
+import CategoryCard from "@/components/category-card";
 
 function page() {
   //extract dynamic id with useParams
@@ -33,6 +34,8 @@ function page() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const [date, setDate] = useState("");
 
   // selection currentPost, loading and error from redux global state
   const currentPost = useAppSelector((state) => state.posts.currentPost);
@@ -63,6 +66,17 @@ function page() {
       dispatch(setError(queryError));
     }
   }, [isError, queryError, dispatch]);
+
+  // get the timestamp of createdAt handling it on client side
+  useEffect(() => {
+    if (currentPost) {
+      setDate(
+        currentPost.createdAt
+          ? new Date(createdAt).toLocaleDateString()
+          : new Date().toLocaleDateString()
+      );
+    }
+  }, [currentPost?.createdAt]);
 
   const handleDelete = async () => {
     try {
@@ -97,6 +111,8 @@ function page() {
     );
   }
 
+  console.log(currentPost);
+
   return (
     <div className="p-6 flex flex-col gap-4 lg:px-14">
       <header
@@ -108,8 +124,10 @@ function page() {
       </header>
       <main className="prose dark:prose-invert max-w-none flex flex-col gap-5">
         <p>{currentPost?.content}</p>
-        <div>
-          
+        <div className="flex flex-row gap-2">
+          {currentPost?.categories.map((category, index) => {
+            return <CategoryCard key={index}>{category}</CategoryCard>;
+          })}
         </div>
       </main>
       <footer className="flex flex-col gap-2 justify-center">
