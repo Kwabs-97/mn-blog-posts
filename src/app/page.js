@@ -10,7 +10,6 @@ import { Rss } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { setFilters } from "../../store/postSlice";
-import { setTotalPosts } from "../../store/postSlice";
 
 export default function Home() {
   const dispatch = useAppDispatch();
