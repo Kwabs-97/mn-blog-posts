@@ -89,7 +89,7 @@ export default function Home() {
           <Search />
           {isLoading ? (
             <div className="flex items-center justify-center min-h-[50vh] flex-row gap-4">
-              <p>LOading blogs</p>
+              <p>Loading blogs...</p>
               <LoadingSpinner color="blue" />
             </div>
           ) : paginatedPosts.length < 1 ? (
