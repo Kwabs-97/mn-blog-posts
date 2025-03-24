@@ -15,7 +15,7 @@ import {
 export function usePosts(page, limit) {
   return useQuery({
     queryKey: ["posts", page, limit],
-    queryFn: () => api.getPosts(page, limit),
+    queryFn: () => api.getPosts(),
   });
 }
 

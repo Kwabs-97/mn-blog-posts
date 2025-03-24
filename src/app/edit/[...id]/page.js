@@ -8,10 +8,16 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { toast } from "sonner";
 
 function EditPage() {
+
+  //extract dynamic id from params
   const { id } = useParams();
   const router = useRouter();
+
+  // grab specific post with id extracted
   const { data: post, error, isLoading, isSuccess } = usePost(id);
   const updatePost = useUpdatePost();
+
+
   const handleSubmit = async (data) => {
     try {
       await updatePost.mutateAsync({ id, data });

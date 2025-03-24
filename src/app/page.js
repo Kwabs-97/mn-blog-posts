@@ -16,10 +16,8 @@ export default function Home() {
   const { page, category, search, limit } = useAppSelector(
     (state) => state.posts.filters
   );
-  const loading = useAppSelector((state) => state.posts.loading);
-  const error = useAppSelector((state) => state.posts.error);
 
-  const { data, isLoading } = usePosts(page, limit);
+  const { data, isLoading, isError, error } = usePosts(page, limit);
 
   const filteredPosts = useMemo(() => {
     if (!data?.posts) return [];
@@ -59,9 +57,9 @@ export default function Home() {
     dispatch(setFilters({ page: newPage }));
   };
 
-  if (error) {
+  if (isError) {
     return (
-      <div className="h-screen w-screen px-5 flex items-center justify-center">
+      <div className="min-h-[50%] w-screen px-5 flex items-center justify-center">
         <p className="text-red-400 font-semibold">{`Error loading page. -${error}. Please try again later`}</p>
       </div>
     );
