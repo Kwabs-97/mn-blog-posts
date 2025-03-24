@@ -1,5 +1,13 @@
 ## Getting Started
 
+## Features
+
+- Create, read, update, and delete blog posts
+- Modern and responsive UI
+- TypeScript for type safety
+- Next.js for optimal performance
+- Tailwind CSS for styling
+
 1. Clone the repository:
 
 ```bash
@@ -23,13 +31,7 @@ npm run dev
 yarn dev
 ```
 
-4. In a separate terminal, start the JSON Server API:
-
-```bash
-npm run api
-# or
-yarn api
-```
+````
 
 The application will be available at `http://localhost:3000`, and the API will be running at `http://localhost:3001`.
 
@@ -39,7 +41,7 @@ To run the application using Docker:
 
 ```bash
 docker-compose up --build
-```
+````
 
 This will start both the frontend and API containers.
 
@@ -55,16 +57,34 @@ The application uses JSON Server as a mock API. The `db.json` file is hosted on 
 - `npm run lint` - Run ESLint
 - `npm run api` - Start the JSON Server API
 
-## Technologies Used
+## Tech Stack
 
-- Next.js 15
-- React 19
-- Tailwind CSS
-- Redux Toolkit
-- React Query
-- JSON Server
-- Docker
-- TypeScript
+### Core Technologies
+
+- Next.js 15.2.3
+- React 19.0.0
+- React DOM 19.0.0
+
+### State Management & Data Fetching
+
+- Redux Toolkit 2.6.1
+- React Query (TanStack Query) 5.69.0
+- React Hook Form 7.54.2
+
+### UI & Styling
+
+- Tailwind CSS 4.x
+- PostCSS 4.x
+- Class Variance Authority 0.7.1
+- Tailwind Merge 3.0.2
+- TW Animate CSS 1.2.4
+- Lucide React 0.483.0
+- CLSX 2.1.1
+
+### Development Tools
+
+- TypeScript 5.x
+- Node.js 20.x (types)
 
 ## Contributing
 
