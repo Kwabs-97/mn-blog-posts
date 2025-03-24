@@ -25,18 +25,29 @@ import {
 import { toast } from "sonner";
 
 function page() {
+  //extract dynamic id with useParams
   const { id } = useParams();
   const router = useRouter();
+
+  //managing deleting state with a local useState
   const [isDeleting, setIsDeleting] = useState(false);
+
   const dispatch = useAppDispatch();
 
+  // selection currentPost, loading and error from redux global state
   const currentPost = useAppSelector((state) => state.posts.currentPost);
   const loading = useAppSelector((state) => state.posts.loading);
   const error = useAppSelector((state) => state.posts.error);
 
+  // getting specific post data using the usePost hook
   const { data, isLoading, isError, error: queryError } = usePost(id);
+
+  // useDeletePost hook to delete post
   const deletePost = useDeletePost();
   console.log(data);
+
+  // updating loading, error and current post state in redux
+  // useEffect so i don't trigger rerenders
   useEffect(() => {
     if (data) {
       dispatch(setCurrentPost(data));
