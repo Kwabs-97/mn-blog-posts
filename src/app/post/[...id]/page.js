@@ -27,15 +27,16 @@ import CategoryCard from "@/components/category-card";
 
 function page() {
   //extract dynamic id with useParams
-  const { id } = useParams();
+  const { id: _id } = useParams(); // Extract _id from useParams
+
   const router = useRouter();
 
   //managing deleting state with a local useState
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const dispatch = useAppDispatch();
+  console.log(_id)
 
-  const [date, setDate] = useState("");
+  const dispatch = useAppDispatch();
 
   // selection currentPost, loading and error from redux global state
   const currentPost = useAppSelector((state) => state.posts.currentPost);
@@ -43,17 +44,18 @@ function page() {
   const error = useAppSelector((state) => state.posts.error);
 
   // getting specific post data using the usePost hook
-  const { data, isLoading, isError, error: queryError } = usePost(id);
+  const { data, isLoading, isError, error: queryError } = usePost(_id); // Pass _id to usePost
+  console.log(data?.post); // Log the correct property
 
   // useDeletePost hook to delete post
   const deletePost = useDeletePost();
-  console.log(data);
+ 
 
   // updating loading, error and current post state in redux
 
   useEffect(() => {
     if (data) {
-      dispatch(setCurrentPost(data));
+      dispatch(setCurrentPost(data.post));
     }
   }, [data, dispatch]);
 
@@ -73,7 +75,7 @@ function page() {
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
-      await deletePost.mutateAsync(id);
+      await deletePost.mutateAsync(_id); // Pass _id to deletePost
       toast.success("Post has successfully been deleted ");
       router.push("/");
     } catch (error) {
@@ -84,7 +86,7 @@ function page() {
   };
 
   function handleEditNavigation() {
-    router.push(`/edit/${id}`);
+    router.push(`/edit/${_id}`); // Use _id for navigation
   }
 
   if (loading) {
@@ -103,7 +105,6 @@ function page() {
     );
   }
 
-  console.log(currentPost);
 
   return (
     <div className="p-6 flex flex-col gap-4 lg:px-14">

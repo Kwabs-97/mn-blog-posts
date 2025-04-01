@@ -12,18 +12,18 @@ import {
   deletePost as deletePostAction,
 } from "../../store/postSlice";
 
-export function usePosts(page, limit) {
+export function usePosts(page, limit, category, search) {
   return useQuery({
-    queryKey: ["posts", page, limit],
-    queryFn: () => api.getPosts(),
+    queryKey: ["posts", page, limit, category, search],
+    queryFn: () => api.getPosts(page, limit, category, search),
   });
 }
 
-export function usePost(id) {
+export function usePost(_id) { // Reverted id to _id
   return useQuery({
-    queryKey: ["post", id],
-    queryFn: () => api.getPost(id),
-    enabled: !!id,
+    queryKey: ["post", _id], // Reverted id to _id
+    queryFn: () => api.getPost(_id), // Reverted id to _id
+    enabled: !!_id,
   });
 }
 

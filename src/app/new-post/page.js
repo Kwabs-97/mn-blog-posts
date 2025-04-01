@@ -17,7 +17,7 @@ function AddPost() {
       toast.success("Blog created successfully");
       console.log(newPost);
       // navigate to newly created post after successfully adding to posts
-      router.push(`post/${newPost.id}`);
+      router.push(`post/${newPost._id}`);
     } catch (error) {
       toast.error("Failed to create blog post");
       console.log(error);

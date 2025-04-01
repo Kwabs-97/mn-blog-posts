@@ -1,5 +1,5 @@
 "use client";
-import { usePosts, useDeletePost, usePost } from "@/hooks/usePosts";
+import { usePosts } from "@/hooks/usePosts";
 import PostCard from "@/components/PostCard";
 import Search from "@/components/ui/search";
 import { useMemo } from "react";
@@ -17,41 +17,41 @@ export default function Home() {
     (state) => state.posts.filters
   );
 
-  const { data, isLoading, isError, error } = usePosts(page, limit);
+  const { data, isLoading, isError, error } = usePosts(page, limit, category, search);
+  const posts = data && data.posts;
+  const total = data && data.total;
+  console.log(posts)
 
-  const filteredPosts = useMemo(() => {
-    if (!data?.posts) return [];
+  // const filteredPosts = useMemo(() => {
+  //   if (!data?.posts) return [];
+  //   let posts = [...data.posts];
+  //   // Apply search filter
+  //   if (search) {
+  //     const searchTerm = search.toLowerCase();
+  //     posts = posts.filter(
+  //       (post) =>
+  //         post.title.toLowerCase().includes(searchTerm) ||
+  //         post.author.toLowerCase().includes(searchTerm) ||
+  //         post.content.toLowerCase().includes(searchTerm) ||
+  //         post.categories.some((category) =>
+  //           category.toLowerCase().includes(searchTerm)
+  //         )
+  //     );
+  //   }
 
-    let posts = [...data.posts];
+  //   // Apply category filter
+  //   if (category) {
+  //     posts = posts.filter((post) => post.categories.includes(category));
+  //   }
+  //   return posts;
+  // }, [data?.posts, search, category]);
 
-    // Apply search filter
-    if (search) {
-      const searchTerm = search.toLowerCase();
-      posts = posts.filter(
-        (post) =>
-          post.title.toLowerCase().includes(searchTerm) ||
-          post.author.toLowerCase().includes(searchTerm) ||
-          post.content.toLowerCase().includes(searchTerm) ||
-          post.categories.some((category) =>
-            category.toLowerCase().includes(searchTerm)
-          )
-      );
-    }
-
-    // Apply category filter
-    if (category) {
-      posts = posts.filter((post) => post.categories.includes(category));
-    }
-
-    return posts;
-  }, [data?.posts, search, category]);
-
-  // Apply pagination after filtering
-  const paginatedPosts = useMemo(() => {
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    return filteredPosts.slice(startIndex, endIndex);
-  }, [filteredPosts, page, limit]);
+  // // Apply pagination after filtering
+  // const paginatedPosts = useMemo(() => {
+  //   const startIndex = (page - 1) * limit;
+  //   const endIndex = startIndex + limit;
+  //   return filteredPosts.slice(startIndex, endIndex);
+  // }, [filteredPosts, page, limit]);
 
   const handlePageChange = (newPage) => {
     dispatch(setFilters({ page: newPage }));
@@ -65,7 +65,7 @@ export default function Home() {
     );
   }
 
-  const totalPages = Math.ceil(filteredPosts.length / limit);
+  const totalPages = Math.ceil(total / limit);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -90,7 +90,7 @@ export default function Home() {
               <p>Loading blogs...</p>
               <LoadingSpinner color="blue" />
             </div>
-          ) : paginatedPosts.length < 1 ? (
+          ) : posts.length < 1 ? (
             <div className="flex items-center justify-center min-h-[50vh]">
               <p className="text-gray-500 dark:text-gray-400 text-lg">
                 No posts found
@@ -98,8 +98,8 @@ export default function Home() {
             </div>
           ) : (
             <div className="space-y-6">
-              {paginatedPosts.map((post) => (
-                <PostCard key={post.id} post={post} />
+              {posts.map((post) => (
+                <PostCard key={post._id} post={post} />
               ))}
             </div>
           )}

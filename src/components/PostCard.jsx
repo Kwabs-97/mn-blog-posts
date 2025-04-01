@@ -8,7 +8,7 @@ import CategoryCard from "./category-card";
 function PostCard({ post }) {
   const router = useRouter();
   function handleNavigation() {
-    router.push(`/post/${post.id}`);
+    router.push(`/post/${post._id}`);
   }
   return (
     <div
@@ -17,7 +17,7 @@ function PostCard({ post }) {
     >
       <div className="flex justify-between items-start mb-4">
         <Link
-          href={`/post/${post.id}`}
+          href={`/post/${post._id}`}
           className="text-sm md:text-2xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
         >
           {post.title}

@@ -1,14 +1,12 @@
-const BASE_URL = "https://mn-db-json.onrender.com";
+const BASE_URL = "http://localhost:5000";
 
 export const api = {
-  async getPosts() {
+  async getPosts(page, limit, category, search) {
+    console.log(page)
     try {
-      const response = await fetch(`${BASE_URL}/posts`);
+      const response = await fetch(`${BASE_URL}/posts/?page=${page}&limit=${limit}&search=${search}&category=${category}`);
       const posts = await response.json();
-      return {
-        posts: Array.isArray(posts) ? posts : [],
-        total: Array.isArray(posts) ? posts.length : 0,
-      };
+      return posts;
     } catch (error) {
       console.error("API Error:", error);
       return {
@@ -19,14 +17,13 @@ export const api = {
     }
   },
 
-  async getPost(id) {
+  async getPost(_id) {
     try {
-      const response = await fetch(`${BASE_URL}/posts/${id}`);
+      const response = await fetch(`${BASE_URL}/post/${_id}`);
       if (!response.ok) {
         throw new Error("Post not found");
       }
-      const post = await response.json();
-      return post;
+      return await response.json(); 
     } catch (error) {
       console.log(error);
       throw error;
@@ -40,7 +37,7 @@ export const api = {
       createdAt: new Date().toISOString(),
     };
     try {
-      const response = await fetch(`${BASE_URL}/posts`, {
+      const response = await fetch(`${BASE_URL}/new-post`, {
         method: "POST",
         headers: {
           "Content-Type": "Application/json",
