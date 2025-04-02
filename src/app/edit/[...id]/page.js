@@ -16,7 +16,7 @@ function EditPage() {
   // grab specific post with id extracted
   const { data: post, error, isLoading, isSuccess } = usePost(id);
   const updatePost = useUpdatePost();
-
+  console.log(post)
 
   const handleSubmit = async (data) => {
     try {
@@ -47,7 +47,7 @@ function EditPage() {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Edit Post
+
             </h1>
             <Link
               href={`/post/${id}`}
@@ -58,7 +58,7 @@ function EditPage() {
           </div>
 
           <PostForm
-            initialData={post}
+            initialData={post.post}
             onSubmit={handleSubmit}
             isSubmitting={updatePost.isPending}
             isSuccess={isSuccess}
