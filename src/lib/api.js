@@ -56,9 +56,11 @@ export const api = {
       throw error;
     }
   },
+
+  
   async updatePost(id, postData) {
     try {
-      const response = await fetch(`${BASE_URL}/posts/${id}`, {
+      const response = await fetch(`${BASE_URL}/post/edit/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

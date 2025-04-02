@@ -27,14 +27,14 @@ import CategoryCard from "@/components/category-card";
 
 function page() {
   //extract dynamic id with useParams
-  const { id: _id } = useParams(); // Extract _id from useParams
+  const { id } = useParams(); // Extract id from useParams
 
   const router = useRouter();
 
   //managing deleting state with a local useState
   const [isDeleting, setIsDeleting] = useState(false);
 
-  console.log(_id)
+  console.log(id)
 
   const dispatch = useAppDispatch();
 
@@ -44,8 +44,8 @@ function page() {
   const error = useAppSelector((state) => state.posts.error);
 
   // getting specific post data using the usePost hook
-  const { data, isLoading, isError, error: queryError } = usePost(_id); // Pass _id to usePost
-  console.log(data?.post); // Log the correct property
+  const { data, isLoading, isError, error: queryError } = usePost(id); // Pass id to usePost
+  console.log(data); // Log the correct property
 
   // useDeletePost hook to delete post
   const deletePost = useDeletePost();
@@ -75,7 +75,7 @@ function page() {
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
-      await deletePost.mutateAsync(_id); // Pass _id to deletePost
+      await deletePost.mutateAsync(id); // Pass id to deletePost
       toast.success("Post has successfully been deleted ");
       router.push("/");
     } catch (error) {
@@ -86,7 +86,7 @@ function page() {
   };
 
   function handleEditNavigation() {
-    router.push(`/edit/${_id}`); // Use _id for navigation
+    router.push(`/edit/${id}`); // Use id for navigation
   }
 
   if (loading) {

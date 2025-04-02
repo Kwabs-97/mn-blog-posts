@@ -99,7 +99,7 @@ export default function Home() {
           ) : (
             <div className="space-y-6">
               {posts.map((post) => (
-                <PostCard key={post._id} post={post} />
+                <PostCard key={post.id} post={post} />
               ))}
             </div>
           )}

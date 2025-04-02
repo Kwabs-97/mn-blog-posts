@@ -19,11 +19,11 @@ export function usePosts(page, limit, category, search) {
   });
 }
 
-export function usePost(_id) { // Reverted id to _id
+export function usePost(id) { // Reverted id to _id
   return useQuery({
-    queryKey: ["post", _id], // Reverted id to _id
-    queryFn: () => api.getPost(_id), // Reverted id to _id
-    enabled: !!_id,
+    queryKey: ["post", id], // Reverted id to _id
+    queryFn: () => api.getPost(id), // Reverted id to _id
+    enabled: !!id,
   });
 }
 

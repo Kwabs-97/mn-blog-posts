@@ -16,7 +16,6 @@ function EditPage() {
   // grab specific post with id extracted
   const { data: post, error, isLoading, isSuccess } = usePost(id);
   const updatePost = useUpdatePost();
-  console.log(post)
 
   const handleSubmit = async (data) => {
     try {
