@@ -81,7 +81,7 @@ export const api = {
   },
   async deletePost(id) {
     try {
-      const response = await fetch(`${BASE_URL}/posts/${id}`, {
+      const response = await fetch(`${BASE_URL}/post/${id}`, {
         method: "DELETE",
       });
 
