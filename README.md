@@ -45,12 +45,6 @@ docker-compose up --build
 
 This will start both the frontend and API containers.
 
-## API
-
-The application uses JSON Server as a mock API. The `db.json` file is hosted on Render and contains the blog posts data.
-However, the mock API is successfully hosted on render so have fun and don't worry so much about that. `db.json` file shows the
-exact schema of dataset.
-
 ## Available Scripts
 
 - `npm run dev` - Start the development server with Turbopack
@@ -86,6 +80,10 @@ exact schema of dataset.
 
 - TypeScript 5.x
 - Node.js 20.x (types)
+
+
+### Backend runs in the backend directory. Kindly navigate to backend and read the instructions there before spinning up the frontend server
+### WORK IS BEING DONE TO DOCKERIZE THESE TWO SERVICES FOR EASY USE.
 
 ## Contributing
 
