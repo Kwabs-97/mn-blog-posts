@@ -15,13 +15,4 @@ services:
         - action: rebuild
           path: package.json
 
-  # api:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.api
-  #   ports:
-  #     - "3001:3001"
-  #   volumes:
-  #     - ./db.json:/app/db.json
-  #   environment:
-  #     - NODE_ENV=development
+
